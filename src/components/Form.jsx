@@ -2,34 +2,18 @@ import { useState } from "react"
 import './form.css'
 import ExcelJS from 'exceljs'
 
-function Form({setCards, setShowForm, setShowSavedFlashcard, setShowNewFlashcard}) {
-    //const [question, setQuestion] = useState('')
-    //const [answer, setAnswer] = useState('')
+function Form({ setCards, setShowForm, setShowSavedFlashcard, setShowNewFlashcard }) {
     const [pendingQuestions, setPendingQuestions] = useState([]);
-    //const frontRef = useRef()
-    //const backRef = useRef()
     const [file, setFile] = useState(null)
     const [title, setTitle] = useState('')
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     if (question.trim() === '' || answer.trim() === '') {
-    //         alert("Både fråga och svar måste fyllas i!")
-    //         return;
-    //     }
-
-    //     setPendingQuestions(prev => [...prev, { question, answer }])
-    //     setQuestion('')
-    //     setAnswer('')
-    // }
-
     const handleUpload = (e) => {
         e.preventDefault()
-        if(!file) {
+        if (!file) {
             alert('Du måste välja en fil att ladda upp först')
             return
         }
-        
+
         const readFile = new FileReader()
 
         readFile.onload = async (event) => {
@@ -41,18 +25,18 @@ function Form({setCards, setShowForm, setShowSavedFlashcard, setShowNewFlashcard
             const flashcardContent = []
 
             worksheet.eachRow((row) => {
-                const firstCell = row.getCell(1)                
+                const firstCell = row.getCell(1)
                 const imageInSpreedsheet = typeof firstCell.value === 'object' && firstCell.value.hyperlink || typeof firstCell.value === 'string' && firstCell.value.match(/\.(jpg|jpeg|png|gif)$/i)
 
-                if(imageInSpreedsheet) {
+                if (imageInSpreedsheet) {
                     const image = row.getCell(1).hyperlink || ''
                     const answer = row.getCell(2).value.toString() || ''
-                    flashcardContent.push({image, answer})
+                    flashcardContent.push({ image, answer })
                     console.log('Inside image')
                 } else {
                     const question = row.getCell(1).value.toString() || ''
                     const answer = row.getCell(2).value.toString() || ''
-                    flashcardContent.push({question, answer})
+                    flashcardContent.push({ question, answer })
                     console.log('vanlig')
                 }
             })
@@ -62,7 +46,7 @@ function Form({setCards, setShowForm, setShowSavedFlashcard, setShowNewFlashcard
     }
 
     const handleFileChange = (e) => {
-        if(e.target.files) {
+        if (e.target.files) {
             setFile(e.target.files[0])
         }
     }
@@ -72,13 +56,13 @@ function Form({setCards, setShowForm, setShowSavedFlashcard, setShowNewFlashcard
     };
 
     const handleFlashcards = () => {
-        if(!title.trim()) {
+        if (!title.trim()) {
             alert('Du måste ange ett namn på dina flashcards')
             return
         }
         const savedCards = JSON.parse(localStorage.getItem('flashcards')) || {}
 
-        if(Object.prototype.hasOwnProperty.call(savedCards, title)) {
+        if (Object.prototype.hasOwnProperty.call(savedCards, title)) {
             alert('Det finns redan flashcards sparade under det namnet')
             return
         }
@@ -97,113 +81,56 @@ function Form({setCards, setShowForm, setShowSavedFlashcard, setShowNewFlashcard
         setShowNewFlashcard(false)
     }
 
-    // const handleHeight = (textarea) => {
-    //     const element = textarea.current
-    //     element.style.height = 'auto'
-    //     element.style.height = `${element.scrollHeight}px` 
-    // }
-
     return (
         <>
-        {/* <form className="flashcard__form" onSubmit={handleSubmit}>
-            <fieldset className="flashcard__fieldset">
-                <legend>Skapa nya flashcards:</legend>
-                <label htmlFor="title">Titel på flashcards:</label>
-                <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="Titel på dina flashcards"
-                />
-                <label htmlFor="question">Framsida:</label>
-                <textarea 
-                    ref={frontRef}
-                    placeholder="Skriv innehållet du vill ha på framsidan av kortet här"
-                    id="question"
-                    name="question"
-                    value={question}
-                    onChange={(e) => { 
-                        setQuestion(e.target.value)
-                        handleHeight(frontRef)
-                    }}
-                />
-                <label htmlFor="answer">Baksida:</label>
-                <textarea
-                    ref={backRef}
-                    placeholder="Skriv innehållet du vill ha på baksidan av kortet här"
-                    id="answer"
-                    name="answer"
-                    value={answer}
-                    onChange={(e) => {
-                        setAnswer(e.target.value)
-                        handleHeight(backRef)
-                    }}
-                />
-                <input 
-                    type="submit" 
-                    value="Lägg till" 
-                    className="flashcard__submit" />
-            </fieldset>
-        </form> */}
-
-        <form className="flashcard__form" onSubmit={handleUpload}>
-            <fieldset className="flashcard__fieldset">
-                <legend>Ladda upp från fil:</legend>
-                <label htmlFor="title">Titel på flashcards:</label>
-                <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="Titel på dina flashcards"
-                />
-                <input id="file" type="file" 
-                onChange={handleFileChange}
-                />
-                {/* {file && (
-                    <section className="flashcard__file-information">
-                        <h3>File details:</h3>
-                        <ul>
-                            <li>Name: {file.name}</li>
-                        </ul>
-                    </section>
-                )} */}
-                <input 
-                    type="submit" 
-                    value="Ladda upp fil" 
-                    className="flashcard__submit" />
-            </fieldset>
-        </form>
-        {pendingQuestions.length > 0 && (
-            <section className="flashcard__questions">
-                <h3>Förhandsgranska</h3>
+            <form className="flashcard__form" onSubmit={handleUpload}>
+                <fieldset className="flashcard__fieldset">
+                    <legend>Ladda upp från fil:</legend>
+                    <label htmlFor="title">Titel på flashcards:</label>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        placeholder="Titel på dina flashcards"
+                    />
+                    <input id="file" type="file"
+                        onChange={handleFileChange}
+                    />
+                    <input
+                        type="submit"
+                        value="Ladda upp fil"
+                        className="flashcard__submit" />
+                </fieldset>
+            </form>
+            {pendingQuestions.length > 0 && (
+                <section className="flashcard__questions">
+                    <h3>Förhandsgranska</h3>
                     {pendingQuestions.map((item, index) => (
                         <section key={index}>
                             {'image' in item ? (
                                 <>
-                                    <img className="image__section" src={`${item.image}`} alt={`${item.answer}`}/> 
-                                    <span className="answer__section">{item.answer}</span> 
-                                    <button onClick={() => handleRemove(index)}>X</button> 
+                                    <img className="image__section" src={`${item.image}`} alt={`${item.answer}`} />
+                                    <span className="answer__section">{item.answer}</span>
+                                    <button onClick={() => handleRemove(index)}>X</button>
                                 </>
                             ) : (
                                 <>
-                                    <span className="question__section">{item.question}: </span>  
-                                    <span className="answer__section"> {item.answer}</span> 
-                                    <button onClick={() => handleRemove(index)}>X</button> 
+                                    <span className="question__section">{item.question}: </span>
+                                    <span className="answer__section"> {item.answer}</span>
+                                    <button onClick={() => handleRemove(index)}>X</button>
                                 </>
                             )}
                         </section>
                     ))}
-                <button onClick={handleFlashcards}>
-                    Skapa flashcards
-                </button>
-            </section>
-        )}
+                    <button onClick={handleFlashcards}>
+                        Skapa flashcards
+                    </button>
+                </section>
+            )}
         </>
-    )  
+    )
 }
 
 export default Form
