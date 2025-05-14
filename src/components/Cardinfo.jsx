@@ -65,7 +65,7 @@ function Cardinfo({cards, setCards, currentIndex, setCurrentIndex}) {
                 </button>
                 </section>
             </section>
-            <p>Kort {currentIndex + 1} av {cards.length}</p>
+            <section className="showcase-left">Left: {cards.length}</section>
             <section className="showcase-can">&#x2713; {can}</section>
         </div>
     )  

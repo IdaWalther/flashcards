@@ -85,3 +85,12 @@
     right: 0;
     bottom: 0;
 }
+
+.showcase-left {
+    background-color: rgb(23, 32, 78);
+    color: #f1f1f1;
+    padding: .5rem;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
