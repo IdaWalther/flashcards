@@ -1,37 +1,36 @@
-import { useEffect, useState } from "react";
-import ShowCard from "./ShowCard";
+import { useEffect, useState } from "react"
+import ShowCard from "./ShowCard"
 
 function SavedCard() {
-    const [categories, setCategories] = useState([]);
-    const [selected, setSelected] = useState(null);
-    const [cards, setCards] = useState([]);
+    const [categories, setCategories] = useState([])
+    const [selected, setSelected] = useState(null)
+    const [cards, setCards] = useState([])
 
     useEffect(() => {
-        const saved = localStorage.getItem("flashcards");
+        const saved = localStorage.getItem("flashcards")
         if (saved) {
-            const parsed = JSON.parse(saved);
-            setCategories(Object.keys(parsed));
+            const parsed = JSON.parse(saved)
+            setCategories(Object.keys(parsed))
         }
-    }, []);
+    }, [])
 
     useEffect(() => {
         if (selected) {
-            const savedCards = JSON.parse(localStorage.getItem("flashcards"));
-            const themeCards = savedCards[selected] || [];
-            setCards(themeCards);
+            const savedCards = JSON.parse(localStorage.getItem("flashcards"))
+            const themeCards = savedCards[selected] || []
+            setCards(themeCards)
         }
-    }, [selected]);
+    }, [selected])
 
     const removeCategory = (index) => {
-        const remove = categories[index];
-
-        const saved = JSON.parse(localStorage.getItem("flashcards")) || {};
-        delete saved[remove];
-        localStorage.setItem("flashcards", JSON.stringify(saved));
-
-        const updatedCategories = categories.filter((_, i) => i !== index);
-        setCategories(updatedCategories);
-    };
+        const remove = categories[index]
+        const saved = JSON.parse(localStorage.getItem("flashcards")) || {}
+        delete saved[remove]
+        localStorage.setItem("flashcards", JSON.stringify(saved))
+        const updatedCategories = categories.filter((_, i) => i !== index)
+        setCategories(updatedCategories)
+    }
+    
     return (
         <>
             {!selected && (

@@ -2,8 +2,8 @@ import Cardinfo from "./Cardinfo"
 import { useState } from "react"
 
 function ShowCard({ cards, setCards }) {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [knownCards, setKnownCards] = useState([]);
+    const [currentIndex, setCurrentIndex] = useState(0)
+    const [knownCards, setKnownCards] = useState([])
     const [can, setCan] = useState(0)
 
     if (!cards || cards.length === 0 & knownCards.length === 0) {

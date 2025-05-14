@@ -1,6 +1,6 @@
-import { useState } from "react";
-import "./form.css";
-import ExcelJS from "exceljs";
+import { useState } from "react"
+import "./form.css"
+import ExcelJS from "exceljs"
 
 function Form({
     setCards,
@@ -8,88 +8,85 @@ function Form({
     setShowSavedFlashcard,
     setShowNewFlashcard,
 }) {
-    const [pendingQuestions, setPendingQuestions] = useState([]);
-    const [file, setFile] = useState(null);
-    const [title, setTitle] = useState("");
+    const [pendingQuestions, setPendingQuestions] = useState([])
+    const [file, setFile] = useState(null)
+    const [title, setTitle] = useState("")
 
     const handleUpload = (e) => {
         e.preventDefault();
         if (!file) {
-            alert("Du måste välja en fil att ladda upp först");
+            alert("Du måste välja en fil att ladda upp först")
             return;
         }
 
-        const readFile = new FileReader();
+        const readFile = new FileReader()
 
         readFile.onload = async (event) => {
-            const content = event.target.result;
-
-            const workbook = new ExcelJS.Workbook();
-            await workbook.xlsx.load(content);
-            const worksheet = workbook.worksheets[0];
-            const flashcardContent = [];
+            const content = event.target.result
+            const workbook = new ExcelJS.Workbook()
+            await workbook.xlsx.load(content)
+            const worksheet = workbook.worksheets[0]
+            const flashcardContent = []
 
             worksheet.eachRow((row) => {
-                const firstCell = row.getCell(1);
+                const firstCell = row.getCell(1)
                 const imageInSpreedsheet =
                     (typeof firstCell.value === "object" && firstCell.value.hyperlink) ||
                     (typeof firstCell.value === "string" &&
-                        firstCell.value.match(/\.(jpg|jpeg|png|gif)$/i));
+                        firstCell.value.match(/\.(jpg|jpeg|png|gif)$/i))
 
                 if (imageInSpreedsheet) {
-                    const image = row.getCell(1).hyperlink || "";
-                    const answer = row.getCell(2).value.toString() || "";
+                    const image = row.getCell(1).hyperlink || ""
+                    const answer = row.getCell(2).value.toString() || ""
                     flashcardContent.push({ image, answer });
-                    console.log("Inside image");
                 } else {
-                    const question = row.getCell(1).value.toString() || "";
-                    const answer = row.getCell(2).value.toString() || "";
-                    flashcardContent.push({ question, answer });
-                    console.log("vanlig");
+                    const question = row.getCell(1).value.toString() || ""
+                    const answer = row.getCell(2).value.toString() || ""
+                    flashcardContent.push({ question, answer })
                 }
-            });
+            })
             setPendingQuestions((previousQuestions) => [
                 ...previousQuestions,
                 ...flashcardContent,
-            ]);
-        };
-        readFile.readAsArrayBuffer(file);
-    };
+            ])
+        }
+        readFile.readAsArrayBuffer(file)
+    }
 
     const handleFileChange = (e) => {
         if (e.target.files) {
-            setFile(e.target.files[0]);
+            setFile(e.target.files[0])
         }
-    };
+    }
 
     const handleRemove = (index) => {
-        setPendingQuestions(pendingQuestions.filter((_, i) => i !== index));
-    };
+        setPendingQuestions(pendingQuestions.filter((_, i) => i !== index))
+    }
 
     const handleFlashcards = () => {
         if (!title.trim()) {
-            alert("Du måste ange ett namn på dina flashcards");
-            return;
+            alert("Du måste ange ett namn på dina flashcards")
+            return
         }
         const savedCards = JSON.parse(localStorage.getItem("flashcards")) || {};
 
         if (Object.prototype.hasOwnProperty.call(savedCards, title)) {
             alert("Det finns redan flashcards sparade under det namnet");
-            return;
+            return
         }
         const flashcards = pendingQuestions.map((card) => ({
             ...card,
             flipped: false,
         }));
-        savedCards[title] = flashcards;
-        localStorage.setItem("flashcards", JSON.stringify(savedCards));
+        savedCards[title] = flashcards
+        localStorage.setItem("flashcards", JSON.stringify(savedCards))
 
-        setCards((previousCards) => [...previousCards, ...flashcards]);
-        setShowForm(false);
-        setPendingQuestions([]);
-        setShowSavedFlashcard(true);
-        setShowNewFlashcard(false);
-    };
+        setCards((previousCards) => [...previousCards, ...flashcards])
+        setShowForm(false)
+        setPendingQuestions([])
+        setShowSavedFlashcard(true)
+        setShowNewFlashcard(false)
+    }
 
     return (
         <>
@@ -144,4 +141,4 @@ function Form({
     );
 }
 
-export default Form;
+export default Form
