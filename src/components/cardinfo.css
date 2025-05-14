@@ -17,7 +17,7 @@
     width: 40vw;
     height: 30vh;
     transform-style: preserve-3d;
-    transition: all .8s ease-in-out;
+    transition: all 0.8s ease-in-out;
     transform-origin: center;
 }
 
@@ -45,18 +45,18 @@
 }
 
 .front {
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .front__image {
     height: 90%;
     width: 90%;
     object-fit: cover;
-    border-radius: .2rem;
+    border-radius: 0.2rem;
 }
 
 .back {
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, 0.2);
     transform: rotateY(180deg);
 }
 
@@ -73,7 +73,7 @@
     color: #000000;
     width: 100px;
     height: 30px;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
     background-color: antiquewhite;
     box-shadow: 10px 10px 6px solid white;
     margin: 1rem;
@@ -82,7 +82,7 @@
 .showcase-can {
     background-color: rgb(14, 48, 14);
     color: #f1f1f1;
-    padding: .5rem;
+    padding: 0.5rem;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -91,7 +91,7 @@
 .showcase-left {
     background-color: rgb(23, 32, 78);
     color: #f1f1f1;
-    padding: .5rem;
+    padding: 0.5rem;
     position: absolute;
     left: 0;
     bottom: 0;

@@ -1,50 +1,61 @@
-import { useEffect } from 'react';
-import './cardinfo.css'
+import { useEffect } from "react";
+import "./cardinfo.css";
 
-function Cardinfo({ cards, setCards, currentIndex, setCurrentIndex, knownCards, setKnownCards, can, setCan }) {
+function Cardinfo({
+    cards,
+    setCards,
+    currentIndex,
+    setCurrentIndex,
+    knownCards,
+    setKnownCards,
+    can,
+    setCan,
+}) {
     const card = cards[currentIndex];
 
     const flipCard = () => {
-        setCards(previousCards =>
+        setCards((previousCards) =>
             previousCards.map((card, i) =>
                 i === currentIndex ? { ...card, flipped: !card.flipped } : card
             )
-        )
-    }
+        );
+    };
 
     const unknown = () => {
         if (currentIndex < cards.length - 1) {
             setCurrentIndex(currentIndex + 1);
         } else {
-            setCurrentIndex(0)
+            setCurrentIndex(0);
         }
-    }
+    };
 
     const known = () => {
-        setCan(previousCan => previousCan + 1)
+        setCan((previousCan) => previousCan + 1);
         const knownCard = cards[currentIndex];
-        setKnownCards(previousCards => [...previousCards, knownCard])
+        setKnownCards((previousCards) => [...previousCards, knownCard]);
 
-        const newCards = cards.filter((_, i) => i !== currentIndex)
+        const newCards = cards.filter((_, i) => i !== currentIndex);
 
-        setCards(newCards)
+        setCards(newCards);
 
         if (newCards.length === 0) {
             setCurrentIndex(0);
         } else if (currentIndex >= newCards.length) {
-            setCurrentIndex(0)
+            setCurrentIndex(0);
         }
-    }
+    };
 
     useEffect(() => {
-        console.log(knownCards)
-    }, [knownCards])
+        console.log(knownCards);
+    }, [knownCards]);
     return (
         <div className="flashcard__wrapper">
             <article className="flashcard" onClick={flipCard}>
-                <section className={`card ${card.flipped ? 'flipped' : ''}`}>
+                <section className={`card ${card.flipped ? "flipped" : ""}`}>
                     {card.image ? (
-                        <section className="front"><img className="front__image" src={`${card.image}`} /></section>
+                        <section className="front">
+                            <img className="front__image" src={`${card.image}`} />
+                        </section>
                     ) : (
                         <section className="front">{card.question}</section>
                     )}
@@ -52,9 +63,10 @@ function Cardinfo({ cards, setCards, currentIndex, setCurrentIndex, knownCards, 
                 </section>
             </article>
             <section>
-                <section><button className="change-card__btn" onClick={unknown}>
-                    Practice more
-                </button>
+                <section>
+                    <button className="change-card__btn" onClick={unknown}>
+                        Practice more
+                    </button>
                     <button className="change-card__btn" onClick={known}>
                         &#x2713;
                     </button>
@@ -63,7 +75,7 @@ function Cardinfo({ cards, setCards, currentIndex, setCurrentIndex, knownCards, 
             <section className="showcase-left">Left: {cards.length}</section>
             <section className="showcase-can">&#x2713; {can}</section>
         </div>
-    )
+    );
 }
 
-export default Cardinfo
+export default Cardinfo;
