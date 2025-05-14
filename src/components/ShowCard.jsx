@@ -11,13 +11,8 @@ function ShowCard({cards, setCards}) {
     } else if(!cards || cards.length === 0 & knownCards.length > 0) {
         return (
             <section className="announcement-container"> 
+                <h2>Grymt jobbat!</h2>
                 <p>Du har nu memorerat informationen på alla {can} kort</p>
-                <p>Vill du träna på dem igen?</p>
-
-                <section className="announcement-btn-containter">
-                    <button className="practiceAgain">Ja</button>
-                    <button className="takeMeBack">Nej</button>
-                </section>
             </section>
         )
     }
