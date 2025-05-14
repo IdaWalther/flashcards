@@ -102,3 +102,12 @@
     align-items: center;
     height: 50vh;
 }
+
+.announcement-btn-containter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}

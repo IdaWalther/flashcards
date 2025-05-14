@@ -4,14 +4,20 @@ import { useState } from "react"
 function ShowCard({cards, setCards}) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [knownCards, setKnownCards] = useState([]);
+    const [can, setCan] = useState(0)
 
     if(!cards || cards.length === 0 & knownCards.length === 0) {
         return <p>Det finns inga kort sparade i denna kategori</p>
     } else if(!cards || cards.length === 0 & knownCards.length > 0) {
         return (
             <section className="announcement-container"> 
-                <p>Du har nu memorerat informationen på alla korten</p>
+                <p>Du har nu memorerat informationen på alla {can} kort</p>
                 <p>Vill du träna på dem igen?</p>
+
+                <section className="announcement-btn-containter">
+                    <button className="practiceAgain">Ja</button>
+                    <button className="takeMeBack">Nej</button>
+                </section>
             </section>
         )
     }
@@ -26,6 +32,8 @@ function ShowCard({cards, setCards}) {
                     setCurrentIndex={setCurrentIndex}
                     knownCards={knownCards}
                     setKnownCards={setKnownCards}
+                    can={can}
+                    setCan={setCan}
                 />
             </section>
         </>

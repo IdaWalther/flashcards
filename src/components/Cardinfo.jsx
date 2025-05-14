@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import './cardinfo.css'
 
-function Cardinfo({cards, setCards, currentIndex, setCurrentIndex, knownCards, setKnownCards}) {
+function Cardinfo({cards, setCards, currentIndex, setCurrentIndex, knownCards, setKnownCards, can, setCan}) {
     const card = cards[currentIndex];
-    const [can, setCan] = useState(0);
 
     const flipCard = () => {
         setCards(previousCards => 
