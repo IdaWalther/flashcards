@@ -1,0 +1,80 @@
+.flashcard__form {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background-color: rgba(0,0,0,.2);
+    min-width: 50vw;
+    border-radius: .5rem;
+}
+
+.flashcard__fieldset {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: .25rem;
+}
+
+.flashcard__fieldset input {
+    width: 100%;
+    background-color: rgba(255, 255, 255,.2);
+    margin: 1rem;
+    padding: .6rem;
+    color: #f1f1f1;
+    resize: none;
+    overflow: hidden;
+} 
+
+
+.flashcard__fieldset textarea {
+    width: 100%;
+    background-color: rgba(255, 255, 255,.2);
+    margin: 1.5rem;
+    padding: 1.5rem;
+    color: #f1f1f1;
+    resize: none;
+    overflow: hidden;
+} 
+
+.flashcard__fieldset textarea::placeholder, .flashcard__fieldset input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+}
+
+.flashcard__questions {
+    max-width: 50vw;
+    padding: 1.5rem 0;
+    margin: 1.5rem 0;
+}
+
+.flashcard__questions section {
+    padding: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.question__section {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.answer__section {
+    font-style: italic;
+    color: #fdfeac;
+    padding: .5rem;
+}
+.image__section {
+    width: 50px;
+    height: 50px;
+    margin-right: .3rem;
+    object-fit: contain;
+}
+.flashcard__file-information {
+    padding: 1rem;
+}
+
+.flashcard__fieldset > .flashcard__submit {
+    cursor: pointer;
+    background-color: #17a7ba;
+}
