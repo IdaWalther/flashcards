@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import './form.css'
 import ExcelJS from 'exceljs'
 
@@ -78,7 +78,7 @@ function Form({setCards, setShowForm, setShowSavedFlashcard, setShowNewFlashcard
         }
         const savedCards = JSON.parse(localStorage.getItem('flashcards')) || {}
 
-        if(savedCards.hasOwnProperty(title)) {
+        if(Object.prototype.hasOwnProperty.call(savedCards, title)) {
             alert('Det finns redan flashcards sparade under det namnet')
             return
         }

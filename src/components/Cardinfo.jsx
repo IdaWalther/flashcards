@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import './cardinfo.css'
 
 function Cardinfo({cards, setCards, currentIndex, setCurrentIndex, knownCards, setKnownCards, can, setCan}) {
