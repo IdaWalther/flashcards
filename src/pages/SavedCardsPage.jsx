@@ -5,7 +5,7 @@ function SavedCardsPage() {
     const navigate = useNavigate()
     
     const handleClosePage = () => {
-        navigate('/')
+        navigate('/flashcard')
     }
     return (
         <>

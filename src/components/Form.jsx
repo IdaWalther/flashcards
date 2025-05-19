@@ -1,16 +1,13 @@
 import { useState } from "react"
-import "./form.css"
+import "./styles/form.css"
 import ExcelJS from "exceljs"
+import { useNavigate } from "react-router"
 
-function Form({
-    setCards,
-    setShowForm,
-    setShowSavedFlashcard,
-    setShowNewFlashcard,
-}) {
+function Form() {
     const [pendingQuestions, setPendingQuestions] = useState([])
     const [file, setFile] = useState(null)
     const [title, setTitle] = useState("")
+    const navigate = useNavigate()
 
     const handleUpload = (e) => {
         e.preventDefault();
@@ -68,24 +65,24 @@ function Form({
             alert("Du måste ange ett namn på dina flashcards")
             return
         }
+
         const savedCards = JSON.parse(localStorage.getItem("flashcards")) || {};
 
         if (Object.prototype.hasOwnProperty.call(savedCards, title)) {
             alert("Det finns redan flashcards sparade under det namnet");
             return
         }
+
         const flashcards = pendingQuestions.map((card) => ({
             ...card,
             flipped: false,
         }));
+
         savedCards[title] = flashcards
         localStorage.setItem("flashcards", JSON.stringify(savedCards))
 
-        setCards((previousCards) => [...previousCards, ...flashcards])
-        setShowForm(false)
         setPendingQuestions([])
-        setShowSavedFlashcard(true)
-        setShowNewFlashcard(false)
+        navigate('/flashcard/saved')
     }
 
     return (

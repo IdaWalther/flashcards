@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import "./cardinfo.css"
+import "./styles/cardinfo.css"
 
 function Cardinfo({
     cards,

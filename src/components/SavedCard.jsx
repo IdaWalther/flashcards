@@ -9,8 +9,13 @@ function SavedCard() {
     useEffect(() => {
         const saved = localStorage.getItem("flashcards")
         if (saved) {
+            try {
             const parsed = JSON.parse(saved)
             setCategories(Object.keys(parsed))
+            } catch(error) {
+                console.error(error)
+                setCategories([])
+            }
         }
     }, [])
 
@@ -30,10 +35,12 @@ function SavedCard() {
         const updatedCategories = categories.filter((_, i) => i !== index)
         setCategories(updatedCategories)
     }
-    
+
     return (
-        <>
-            {!selected && (
+        <>  
+        { selected ? (
+            <ShowCard category={selected} cards={cards} setCards={setCards} />
+        ) : (
                 <>
                     <h1>Visa kategorier</h1>
                     <section className='showFlashcardCategories'>
@@ -51,9 +58,6 @@ function SavedCard() {
                         ))}
                     </section>
                 </>
-            )}
-            {selected && (
-                <ShowCard category={selected} cards={cards} setCards={setCards} />
             )}
         </>
     );
