@@ -76,6 +76,7 @@ function Form() {
         const flashcards = pendingQuestions.map((card) => ({
             ...card,
             flipped: false,
+            completed:false
         }));
 
         savedCards[title] = flashcards
