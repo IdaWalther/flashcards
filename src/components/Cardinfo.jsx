@@ -14,13 +14,17 @@ function Cardinfo({
     const card = cards[currentIndex]
     const [left, setLeft] = useState(cards.filter(card => !card.completed).length)
     const [finished, setFinished] = useState(false)
+    const [alreadyFinished, setAlreadyFinished] = useState(false)
 
     useEffect(() => {
         const checkCardsLeft = cards.filter(card => !card.completed).length
         setLeft(checkCardsLeft)
 
-        if(left === 0) {
-            setFinished(true)
+        if (finished) {
+            const timer = setTimeout(() => {
+                setFinished(false)
+            }, 3000)
+            return () => clearTimeout(timer)
         }
     }, [cards])
 
@@ -32,70 +36,66 @@ function Cardinfo({
         );
     };
 
-    const unknown = () => {
-        if (currentIndex < cards.length - 1) {
-            setCurrentIndex(currentIndex + 1)
+    const changeCard = (updatedCards) => {
+        const nextCard = updatedCards.findIndex((card, i) => !card.completed && i > currentIndex)
+        const backToStart = updatedCards.findIndex((card) => !card.completed)
+
+        if (nextCard !== -1) {
+            setCurrentIndex(nextCard)
+        } else if (backToStart !== -1) {
+            setCurrentIndex(backToStart)
         } else {
-            setCurrentIndex(0)
+            setCurrentIndex((currentIndex + 1) % cards.length)
         }
-    };
+    }
 
     const known = () => {
-            const isKnown = cards[currentIndex].completed
-            if(!isKnown) {
-                setCan((previousCan) => previousCan + 1)
-            }
-        setCards((previousCards) => {
-            const isKnown = previousCards[currentIndex].completed
+        const isKnown = cards[currentIndex].completed
+        if (!isKnown) {
+            setCan((previousCan) => previousCan + 1)
+        }
 
-            const updatedCards = previousCards.map((card, i) =>
-                i === currentIndex ? { ...card, completed: true } : card
-            )
+        const updatedCards = cards.map((card, i) =>
+            i === currentIndex ? { ...card, completed: true } : card
+        )
 
-            const nextCard = updatedCards.findIndex((card, i) => !card.completed && i > currentIndex)
-            const backToStart = updatedCards.findIndex((card) => !card.completed)
+        const completed = updatedCards.every(card => card.completed);
+        if (completed && !alreadyFinished) {
+            setFinished(true)
+            setAlreadyFinished(true)
+        }
 
-            if (nextCard !== -1) {
-                setCurrentIndex(nextCard)
-            } else if (backToStart !== -1) {
-                setCurrentIndex(backToStart)
-            } else {
-                setCurrentIndex(0)
-            }
-
-            return updatedCards
-        })
-
-        // const knownCard = cards[currentIndex]
-        // setKnownCards((previousCards) => [...previousCards, knownCard])
-        // const newCards = cards.filter((_, i) => i !== currentIndex)
-        // setCards(newCards)
-
-        // if (newCards.length === 0) {
-        //     setCurrentIndex(0)
-        // } else if (currentIndex >= newCards.length) {
-        //     setCurrentIndex(0)
-        // }
+        setCards(updatedCards)
+        changeCard(updatedCards)
     }
 
     return (
         <div className='flashcard__wrapper'>
+            {finished && (
+                <div className="fireworks">
+                    🎆🎇🎉 Du klarade alla kort! 🎉🎇🎆
+                </div>
+            )}
             <article className='flashcard' onClick={flipCard}>
-                <section className={`star ${card.completed ? "completed" : ""}`}>Star</section>
                 <section className={`card ${card.flipped ? "flipped" : ""}`}>
                     {card.image ? (
                         <section className='front'>
+                            <section className={`star ${card.completed ? "completed" : ""}`}>&#9733;</section>
                             <img className='front__image' src={`${card.image}`} />
+                            <section className="magnifyingGlas">&#128269;</section>
                         </section>
                     ) : (
-                        <section className='front'>{card.question}</section>
+                        <>
+                            <section className={`star ${card.completed ? "completed" : ""}`}>&#9733;</section>
+                            <section className='front'>{card.question}</section>
+                        </>
                     )}
                     <section className='back'>{card.answer}</section>
                 </section>
             </article>
             <section>
                 <section>
-                    <button className='change-card__btn' onClick={unknown}>
+                    <button className='change-card__btn' onClick={() => changeCard(cards)}>
                         &rarr;
                     </button>
                     <button className='change-card__btn' onClick={known}>

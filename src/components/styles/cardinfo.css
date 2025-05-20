@@ -49,9 +49,9 @@
 }
 
 .front__image {
-    height: 90%;
-    width: 90%;
-    object-fit: cover;
+    height: 80%;
+    max-width:80%;
+    object-fit:contain;
     border-radius: 0.2rem;
 }
 
@@ -104,8 +104,19 @@
     align-items: center;
     height: 50vh;
 }
-
+.star {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    font-size: 1.5rem;
+    z-index: 99;
+}
 .completed {
-    border: green;
-    color: red;
+    color: green;
+}
+
+.magnifyingGlas {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
 }
