@@ -104,3 +104,8 @@
     align-items: center;
     height: 50vh;
 }
+
+.completed {
+    border: green;
+    color: red;
+}

@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import "./styles/cardinfo.css"
 
 function Cardinfo({
@@ -12,6 +12,17 @@ function Cardinfo({
     setCan,
 }) {
     const card = cards[currentIndex]
+    const [left, setLeft] = useState(cards.filter(card => !card.completed).length)
+    const [finished, setFinished] = useState(false)
+
+    useEffect(() => {
+        const checkCardsLeft = cards.filter(card => !card.completed).length
+        setLeft(checkCardsLeft)
+
+        if(left === 0) {
+            setFinished(true)
+        }
+    }, [cards])
 
     const flipCard = () => {
         setCards((previousCards) =>
@@ -30,26 +41,47 @@ function Cardinfo({
     };
 
     const known = () => {
-        setCan((previousCan) => previousCan + 1)
-        const knownCard = cards[currentIndex]
-        setKnownCards((previousCards) => [...previousCards, knownCard])
-        const newCards = cards.filter((_, i) => i !== currentIndex)
-        setCards(newCards)
+            const isKnown = cards[currentIndex].completed
+            if(!isKnown) {
+                setCan((previousCan) => previousCan + 1)
+            }
+        setCards((previousCards) => {
+            const isKnown = previousCards[currentIndex].completed
 
-        if (newCards.length === 0) {
-            setCurrentIndex(0)
-        } else if (currentIndex >= newCards.length) {
-            setCurrentIndex(0)
-        }
+            const updatedCards = previousCards.map((card, i) =>
+                i === currentIndex ? { ...card, completed: true } : card
+            )
+
+            const nextCard = updatedCards.findIndex((card, i) => !card.completed && i > currentIndex)
+            const backToStart = updatedCards.findIndex((card) => !card.completed)
+
+            if (nextCard !== -1) {
+                setCurrentIndex(nextCard)
+            } else if (backToStart !== -1) {
+                setCurrentIndex(backToStart)
+            } else {
+                setCurrentIndex(0)
+            }
+
+            return updatedCards
+        })
+
+        // const knownCard = cards[currentIndex]
+        // setKnownCards((previousCards) => [...previousCards, knownCard])
+        // const newCards = cards.filter((_, i) => i !== currentIndex)
+        // setCards(newCards)
+
+        // if (newCards.length === 0) {
+        //     setCurrentIndex(0)
+        // } else if (currentIndex >= newCards.length) {
+        //     setCurrentIndex(0)
+        // }
     }
-
-    useEffect(() => {
-        console.log(knownCards)
-    }, [knownCards])
 
     return (
         <div className='flashcard__wrapper'>
             <article className='flashcard' onClick={flipCard}>
+                <section className={`star ${card.completed ? "completed" : ""}`}>Star</section>
                 <section className={`card ${card.flipped ? "flipped" : ""}`}>
                     {card.image ? (
                         <section className='front'>
@@ -64,14 +96,14 @@ function Cardinfo({
             <section>
                 <section>
                     <button className='change-card__btn' onClick={unknown}>
-                        Practice more
+                        &rarr;
                     </button>
                     <button className='change-card__btn' onClick={known}>
                         &#x2713;
                     </button>
                 </section>
             </section>
-            <section className='showcase-left'>Left: {cards.length}</section>
+            <section className='showcase-left'>Left: {left}</section>
             <section className='showcase-can'>&#x2713; {can}</section>
         </div>
     );
