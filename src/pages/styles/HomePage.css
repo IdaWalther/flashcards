@@ -24,8 +24,16 @@ body {
     width: 150px;
     height: 70px;
     border-radius: .5rem;
+    margin: 0 1rem;
     background-color: antiquewhite;
     box-shadow: 10px 10px 6px solid white;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.setup-flashcard-btn:hover {
+    background-color: rgb(190, 178, 164);
+    transform: scale(1.1);
 }
 
 .showFlashcardCategories {
@@ -39,5 +47,13 @@ body {
     width: 120px;
     padding: .5rem;
     background-color: rgb(252, 167, 57);
-    margin: .6rem
+    margin: .6rem;
+    cursor: pointer;
+    transition: .5s;
+    border-radius: 10px;
+}
+
+.category__btn:hover {
+    background-color: rgb(195, 129, 43);
+    transform: scale(1.1);
 }

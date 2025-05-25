@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import ShowCard from "./ShowCard"
+import { useNavigate } from "react-router"
 
 function SavedCard() {
     const [categories, setCategories] = useState([])
-    const [selected, setSelected] = useState(null)
-    const [cards, setCards] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         const saved = localStorage.getItem("flashcards")
@@ -19,13 +19,6 @@ function SavedCard() {
         }
     }, [])
 
-    useEffect(() => {
-        if (selected) {
-            const savedCards = JSON.parse(localStorage.getItem("flashcards"))
-            const themeCards = savedCards[selected] || []
-            setCards(themeCards)
-        }
-    }, [selected])
 
     const removeCategory = (index) => {
         const remove = categories[index]
@@ -36,11 +29,11 @@ function SavedCard() {
         setCategories(updatedCategories)
     }
 
+    const handleOpenCategory = (category) => {
+        navigate(`/flashcard/saved/${category}`)
+    }
+
     return (
-        <>  
-        { selected ? (
-            <ShowCard category={selected} cards={cards} setCards={setCards} />
-        ) : (
                 <>
                     <h1>Visa kategorier</h1>
                     <section className='showFlashcardCategories'>
@@ -48,19 +41,17 @@ function SavedCard() {
                         {categories.map((category, index) => (
                             <section key={index}>
                                 <button
-                                    onClick={() => setSelected(category)}
+                                    onClick={() => handleOpenCategory(category)}
                                     className='category__btn'
                                 >
                                     {category}
                                 </button>
-                                <button onClick={() => removeCategory(index)}>X</button>
+                                <button className="removeCategory__btn" onClick={() => removeCategory(index)}>X</button>
                             </section>
                         ))}
                     </section>
                 </>
-            )}
-        </>
-    );
+        );
 }
 
 export default SavedCard;

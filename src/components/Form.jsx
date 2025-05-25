@@ -60,6 +60,19 @@ function Form() {
         setPendingQuestions(pendingQuestions.filter((_, i) => i !== index))
     }
 
+    const colors = [
+        "#D72638",
+        "#3F88C5",
+        "#F49D37",
+        "#0000FF",
+        "#AACC00",
+        "#F1C40F",
+        "#8E44AD",
+        "#2ECC71",
+        "#E67E22",
+        "#C0392B"
+    ]
+
     const handleFlashcards = () => {
         if (!title.trim()) {
             alert("Du måste ange ett namn på dina flashcards")
@@ -73,11 +86,23 @@ function Form() {
             return
         }
 
-        const flashcards = pendingQuestions.map((card) => ({
-            ...card,
-            flipped: false,
-            completed:false
-        }));
+        let allColors = [...colors]
+
+        const flashcards = pendingQuestions.map((card) => {
+            if(allColors.length === 0) {
+                allColors = [...colors]
+            }
+            const randomIndex = Math.floor(Math.random() * allColors.length)
+            const randomColor = allColors[randomIndex]
+            allColors.splice(randomIndex, 1)
+
+            return {
+                ...card,
+                flipped: false,
+                completed:false,
+                color: randomColor
+            }
+        });
 
         savedCards[title] = flashcards
         localStorage.setItem("flashcards", JSON.stringify(savedCards))
@@ -115,24 +140,28 @@ function Form() {
                         <section key={index}>
                             {"image" in item ? (
                                 <>
-                                    <img
-                                        className='image__section'
-                                        src={`${item.image}`}
-                                        alt={`${item.answer}`}
-                                    />
-                                    <span className='answer__section'>{item.answer}</span>
-                                    <button onClick={() => handleRemove(index)}>X</button>
+                                    <button className="removeFlashcard__btn" onClick={() => handleRemove(index)}>
+                                        <img
+                                            className='image__section'
+                                            src={`${item.image}`}
+                                            alt={`${item.answer}`}
+                                        />
+                                        <span className='answer__section'>{item.answer}</span>
+                                        <span>X</span>
+                                    </button>
                                 </>
                             ) : (
                                 <>
-                                    <span className='question__section'>{item.question}: </span>
-                                    <span className='answer__section'> {item.answer}</span>
-                                    <button onClick={() => handleRemove(index)}>X</button>
+                                    <button className="removeFlashcard__btn" onClick={() => handleRemove(index)}>
+                                        <span className='question__section'>{item.question}: </span>
+                                        <span className='answer__section'> {item.answer}</span>
+                                        <span>X</span>
+                                    </button>
                                 </>
                             )}
                         </section>
                     ))}
-                    <button onClick={handleFlashcards}>Skapa flashcards</button>
+                    <button className="createFlashcard__btn" onClick={handleFlashcards}>Skapa flashcards</button>
                 </section>
             )}
         </>

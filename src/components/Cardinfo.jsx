@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react"
 import "./styles/cardinfo.css"
+import { useNavigate } from "react-router"
 
 function Cardinfo({
     cards,
     setCards,
     currentIndex,
     setCurrentIndex,
-    knownCards,
-    setKnownCards,
     can,
     setCan,
 }) {
@@ -15,18 +14,18 @@ function Cardinfo({
     const [left, setLeft] = useState(cards.filter(card => !card.completed).length)
     const [finished, setFinished] = useState(false)
     const [alreadyFinished, setAlreadyFinished] = useState(false)
+    const [showImage, setShowImage] = useState(false)
+    const [enlargeImage, setEnlargeImage] = useState(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const checkCardsLeft = cards.filter(card => !card.completed).length
         setLeft(checkCardsLeft)
 
         if (finished) {
-            const timer = setTimeout(() => {
-                setFinished(false)
-            }, 3000)
-            return () => clearTimeout(timer)
+            navigate('/flashcard/success')
         }
-    }, [cards])
+    }, [cards, finished])
 
     const flipCard = () => {
         setCards((previousCards) =>
@@ -69,28 +68,37 @@ function Cardinfo({
         changeCard(updatedCards)
     }
 
+    const enlarge = (event) => {
+        event.stopPropagation()
+        setShowImage(true)
+        setEnlargeImage(card.image)
+    }
+
     return (
         <div className='flashcard__wrapper'>
-            {finished && (
-                <div className="fireworks">
-                    🎆🎇🎉 Du klarade alla kort! 🎉🎇🎆
+            {showImage && (
+                <div className="showimage-wrapper" onClick={() => setShowImage(false)}>
+                    <div className="showimage-content" onClick={(e) => e.stopPropagation()}>
+                        <img src={enlargeImage} alt="Förstorad" className="enlarge-image" />
+                        <button className="showimage-closeBtn" onClick={() => setShowImage(false)}>✖</button>
+                    </div>
                 </div>
             )}
             <article className='flashcard' onClick={flipCard}>
                 <section className={`card ${card.flipped ? "flipped" : ""}`}>
                     {card.image ? (
-                        <section className='front'>
-                            <section className={`star ${card.completed ? "completed" : ""}`}>&#9733;</section>
+                        <section className='front' style={{ backgroundColor: card.color }} >
+                            {/* <section className={`star ${card.completed ? "completed" : ""}`}>&#9733;</section> */}
                             <img className='front__image' src={`${card.image}`} />
-                            <section className="magnifyingGlas">&#128269;</section>
+                            <section className="magnifyingGlas" onClick={enlarge}>&#128269;</section>
                         </section>
                     ) : (
                         <>
-                            <section className={`star ${card.completed ? "completed" : ""}`}>&#9733;</section>
-                            <section className='front'>{card.question}</section>
+                            {/* <section className={`star ${card.completed ? "completed" : ""}`}>&#9733;</section> */}
+                            <section className='front' style={{ backgroundColor: card.color }}>{card.question}</section>
                         </>
                     )}
-                    <section className='back'>{card.answer}</section>
+                    <section className='back' style={{ backgroundColor: card.color }}>{card.answer}</section>
                 </section>
             </article>
             <section>
