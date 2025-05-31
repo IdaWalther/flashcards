@@ -12,8 +12,8 @@ npm run dev
 ```
 
 ## Navigate
-Navigate to the correct page by adding /flashcard behind your localhost. For example
-http://localhost:3000/flashcard
+Navigate to the correct page by adding /flashcard behind your localhost. 
+For example http://localhost:3000/flashcard or the port you're using
 
 ## Create Flashcards  
 1. Click the **"Skapa nya flash cards"** button.  
