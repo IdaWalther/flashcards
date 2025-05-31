@@ -1,6 +1,6 @@
 import FlashCard from "./components/FlashCard"
 import SavedCard from "./components/SavedCard"
-import { useState } from "react";
+import { useState } from "react"
 import './app.css'
 
 function App() {
@@ -49,7 +49,6 @@ function App() {
                     <SavedCard />
                 </>
             )}
-
         </>
     )
 }
