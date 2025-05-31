@@ -1,22 +1,23 @@
 import Cardinfo from "./Cardinfo"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router"
 
-function ShowCard({ cards, setCards }) {
+function ShowCard() {
+    const { category } = useParams()
+    const [cards, setCards] = useState([])
     const [currentIndex, setCurrentIndex] = useState(0)
-    const [knownCards, setKnownCards] = useState([])
     const [can, setCan] = useState(0)
-
-    if (!cards || cards.length === 0 & knownCards.length === 0) {
+    useEffect(() => {
+        const saved = localStorage.getItem("flashcards")
+        if (saved) {
+            const parsed = JSON.parse(saved)
+            const loadedCards = parsed[category] || []
+            setCards(loadedCards)
+        }
+    }, [category])
+    if (!cards || cards.length === 0) {
         return <p>Det finns inga kort sparade i denna kategori</p>
-    } else if (!cards || cards.length === 0 & knownCards.length > 0) {
-        return (
-            <section className="announcement-container">
-                <h2>Grymt jobbat!</h2>
-                <p>Du har nu memorerat informationen på alla {can} kort</p>
-            </section>
-        )
     }
-
     return (
         <>
             <section className="card-container">
@@ -25,8 +26,6 @@ function ShowCard({ cards, setCards }) {
                     setCards={setCards}
                     currentIndex={currentIndex}
                     setCurrentIndex={setCurrentIndex}
-                    knownCards={knownCards}
-                    setKnownCards={setKnownCards}
                     can={can}
                     setCan={setCan}
                 />
