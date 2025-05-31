@@ -50,8 +50,8 @@
 
 .front__image {
     height: 80%;
-    max-width:80%;
-    object-fit:contain;
+    max-width: 80%;
+    object-fit: contain;
     border-radius: 0.2rem;
 }
 
@@ -111,6 +111,7 @@
     align-items: center;
     height: 50vh;
 }
+
 .star {
     position: fixed;
     top: 1rem;
@@ -118,12 +119,14 @@
     font-size: 1.5rem;
     z-index: 99;
 }
+
 .completed {
     color: green;
 }
 
 .magnifyingGlas {
     position: fixed;
+    font-size: 2rem;
     bottom: 1rem;
     right: 1rem;
     z-index: 100;
@@ -131,8 +134,8 @@
     cursor: pointer;
 }
 
-.magnifyingGlas:hover{
-    transform: scale(1.1);
+.magnifyingGlas:hover {
+    transform: scale(1.3);
 }
 
 .showimage-wrapper {
@@ -141,7 +144,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -150,7 +153,6 @@
 
 .showimage-content {
     position: relative;
-    background: #d8d8d8;
     padding: 2rem;
     border-radius: 8px;
     max-width: 90vw;

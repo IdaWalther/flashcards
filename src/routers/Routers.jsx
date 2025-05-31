@@ -12,7 +12,7 @@ function Routers() {
                 <Route path="/flashcard" element={<HomePage />} />
                 <Route path="/flashcard/new" element={<NewCardPage />} />
                 <Route path="/flashcard/saved" element={<SavedCardsPage />} />
-                <Route path="/flashcard/success" element={<SuccessPage/>} />
+                <Route path="/flashcard/success" element={<SuccessPage />} />
                 <Route path="/flashcard/saved/:category" element={<ShowCard />} />
             </Routes>
         </BrowserRouter>

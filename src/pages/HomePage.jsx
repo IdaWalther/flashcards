@@ -1,18 +1,14 @@
 import { useNavigate } from "react-router"
 import "./styles/HomePage.css"
 
-
 function HomePage() {
     const navigate = useNavigate()
-
     const handleShowFlashcard = () => {
         navigate('/flashcard/new')
     }
-
     const handleShowSavedFlashcard = () => {
         navigate('/flashcard/saved')
     }
-
     return (
         <>
             <h1 className="header">Övningar</h1>

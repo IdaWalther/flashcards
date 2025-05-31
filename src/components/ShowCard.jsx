@@ -7,8 +7,7 @@ function ShowCard() {
     const [cards, setCards] = useState([])
     const [currentIndex, setCurrentIndex] = useState(0)
     const [can, setCan] = useState(0)
-
-        useEffect(() => {
+    useEffect(() => {
         const saved = localStorage.getItem("flashcards")
         if (saved) {
             const parsed = JSON.parse(saved)
@@ -16,11 +15,9 @@ function ShowCard() {
             setCards(loadedCards)
         }
     }, [category])
-
     if (!cards || cards.length === 0) {
         return <p>Det finns inga kort sparade i denna kategori</p>
     }
-
     return (
         <>
             <section className="card-container">

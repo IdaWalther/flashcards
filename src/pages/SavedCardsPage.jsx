@@ -1,9 +1,8 @@
 import SavedCard from "../components/SavedCard"
 import { useNavigate } from "react-router"
-function SavedCardsPage() {
 
+function SavedCardsPage() {
     const navigate = useNavigate()
-    
     const handleClosePage = () => {
         navigate('/flashcard')
     }

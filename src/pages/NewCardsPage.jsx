@@ -4,15 +4,13 @@ import Form from "../components/Form"
 
 function NewCardPage() {
     const navigate = useNavigate()
-
     const handleClosePage = () => {
         navigate('/flashcard')
     }
-
     return (
         <>
             <button className="close-flashcard-btn" onClick={handleClosePage}>Stäng</button>
-            <Form/>
+            <Form />
         </>
     )
 }

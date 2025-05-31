@@ -43,7 +43,7 @@
 }
 
 .flashcard__questions {
-    max-width: 50vw;
+    max-width: 80vw;
     padding: 1.5rem 0;
     margin: 1.5rem 0;
 }
@@ -52,7 +52,7 @@
     padding: 1.5rem 0;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .question__section {
@@ -117,4 +117,22 @@
 .createFlashcard__btn:hover {
     background-color: #0f6f7b;
     transform: scale(1.1);
+}
+
+#file {
+    cursor: pointer;
+}
+
+.file__info {
+    width: 100%;
+    text-align: left;
+    font-size: .9rem;
+    color: #d3d1d1;
+}
+
+.errorMsg {
+    width: 100%;
+    border-radius: 10px;
+    padding: 1rem;
+    color: rgb(237, 25, 25);
 }
